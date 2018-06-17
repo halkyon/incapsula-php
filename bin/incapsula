@@ -1,0 +1,30 @@
+#!/usr/bin/env php
+<?php
+
+$autoloaded = false;
+$paths = [
+    __DIR__.'/../../../vendor/autoload.php',
+    __DIR__.'/../../vendor/autoload.php',
+    __DIR__.'/../vendor/autoload.php',
+    __DIR__.'vendor/autoload.php',
+];
+foreach ($paths as $path) {
+    if (file_exists($path)) {
+        require_once $path;
+        $autoloaded = true;
+
+        break;
+    }
+}
+if (false === $autoloaded) {
+    throw new Exception('Please run composer to set up project dependencies');
+}
+
+use Incapsula\Command\IntegrationIpsCommand;
+use Incapsula\Command\CustomCertificateUploadCommand;
+use Symfony\Component\Console\Application;
+
+$application = new Application();
+$application->add(new IntegrationIpsCommand());
+$application->add(new CustomCertificateUploadCommand());
+$application->run();
