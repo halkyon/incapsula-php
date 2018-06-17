@@ -4,14 +4,20 @@ namespace Incapsula\Api;
 
 class SitesApi extends AbstractApi
 {
-    private $api_uri = 'https://my.incapsula.com/api/prov/v1/sites';
+    private $apiUri = 'https://my.incapsula.com/api/prov/v1/sites';
 
     /**
+     * @param int $pageSize
+     * @param int $pageNum
+     *
      * @return array
      */
-    public function list()
+    public function list($pageSize = 50, $pageNum = 0)
     {
-        return $this->client->send(sprintf('%s/list', $this->api_uri));
+        return $this->client->send(sprintf('%s/list', $this->apiUri), [
+            'page_size' => $pageSize,
+            'page_num' => $pageNum,
+        ]);
     }
 
     /**
@@ -21,7 +27,7 @@ class SitesApi extends AbstractApi
      */
     public function add($params = [])
     {
-        return $this->client->send(sprintf('%s/add', $this->api_uri), $params);
+        return $this->client->send(sprintf('%s/add', $this->apiUri), $params);
     }
 
     /**
@@ -31,7 +37,7 @@ class SitesApi extends AbstractApi
      */
     public function delete($siteId)
     {
-        return $this->client->send(sprintf('%s/delete', $this->api_uri), [
+        return $this->client->send(sprintf('%s/delete', $this->apiUri), [
             'site_id' => $siteId,
         ]);
     }
@@ -45,7 +51,7 @@ class SitesApi extends AbstractApi
      */
     public function uploadCustomCertificate($siteId, $certificate, $privateKey)
     {
-        return $this->client->send(sprintf('%s/uploadCustomCertificate', $this->api_uri), [
+        return $this->client->send(sprintf('%s/uploadCustomCertificate', $this->apiUri), [
             'site_id' => $siteId,
             'certificate' => base64_encode($certificate),
             'private_key' => base64_encode($privateKey),
@@ -59,7 +65,7 @@ class SitesApi extends AbstractApi
      */
     public function removeCustomCertificate($siteId)
     {
-        return $this->client->send(sprintf('%s/removeCustomCertificate', $this->api_uri), [
+        return $this->client->send(sprintf('%s/removeCustomCertificate', $this->apiUri), [
             'site_id' => $siteId,
         ]);
     }

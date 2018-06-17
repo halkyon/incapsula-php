@@ -11,6 +11,8 @@ class IntegrationIpsCommand extends AbstractCommand
 {
     protected function configure()
     {
+        parent::configure();
+
         $this
             ->setName('integration:ips')
             ->addOption('json', null, InputOption::VALUE_NONE, 'Output as JSON')

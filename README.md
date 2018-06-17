@@ -1,3 +1,93 @@
+# Incapsula PHP SDK
+
+WORK IN PROGRESS! Some or all of this may end up changing rapidly.
+
+## Introduction
+
+This project contains a PHP SDK to use the Incapsula API programatically, as well as providing
+command line tools for executing various tasks against the Incapsula API.
+
+Currently only a few commands are available. This is currently a work in progress.
+
+## Installation
+
 TODO
 
-Still a work in progress.
+## Configuring credentials
+
+You can define credentials either as environment variables `INCAPSULA_API_ID` and `INCAPSULA_API_KEY`,
+or as a credential file located in the current user home directory `~/.incapsula/credentials`.
+
+Order of preference is environment variables first, then ini file.
+
+Example ini file:
+```
+[default]
+incapsula_api_id = 123
+incapsula_api_key = 1234-5678
+```
+
+Additional profiles can be added by defining more `[section]` in the file. These are then used
+by passing the `--profile <name>` option to commands.
+
+## Usage
+
+Run `./bin/incapsula` to show a listing of all available commands.
+
+Some commands have a `--json` argument which returns as JSON instead of output as a table.
+To switch between credentials in your `~/.incapsula/credentials`, use the `--profile <name>` option.
+
+## Example commands
+
+### Show IP ranges
+
+```
+incapsula integration:ips
+```
+
+### List sites
+
+```
+incapsula sites:list
+```
+
+### Upload custom certificate
+
+```
+incapsula customcertificate:upload <site-id> <certificate-path> <private-key-path>
+```
+
+### Example SDK usage
+
+Use the sites API to enumerate all available sites, create a new site, upload a custom certitificate,
+then remove what was created:
+
+```php
+$client = new Incapsula\Client('<api-id>', '<api-key>');
+$sitesApi = $client->sites();
+
+$sites = $sitesApi->list();
+foreach ($sites as $site) {
+    var_dump($site['site_id']);
+}
+
+$site = $sitesApi->add([
+    'domain' => 'mysite.com',
+]);
+
+var_dump($site['site_id']);
+
+$sitesApi->uploadCustomCertificate($site['site_id'], '---- CERT ----', '---- KEY ----');
+$sitesApi->removeCustomCertificate($site['site_id']);
+
+$sitesApi->delete($site['site_id']);
+```
+
+Use the integration API to retrieve Incapsula IP ranges:
+
+```php
+$client = new Incapsula\Client(null, null);
+$ips = $client->integration()->ips();
+```
+
+Note that retrieving IP ranges doesn't require API credentials, hence the usage of `null` for arguments.

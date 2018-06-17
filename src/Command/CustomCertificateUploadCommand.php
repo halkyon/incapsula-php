@@ -25,6 +25,8 @@ class CustomCertificateUploadCommand extends AbstractCommand
 
     protected function configure()
     {
+        parent::configure();
+
         $this
             ->setName('customcertificate:upload')
             ->addArgument('site-id', InputArgument::REQUIRED, 'Site ID')

@@ -2,6 +2,8 @@
 
 namespace Incapsula;
 
+use Exception;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use Incapsula\Api\IntegrationApi;
 use Incapsula\Api\SitesApi;
@@ -9,14 +11,19 @@ use Incapsula\Api\SitesApi;
 class Client
 {
     /**
-     * @var string
+     * @var null|string
      */
     private $apiId;
 
     /**
-     * @var string
+     * @var null|string
      */
     private $apiKey;
+
+    /**
+     * @var ClientInterface
+     */
+    private $httpClient;
 
     /**
      * @param string $apiId
@@ -26,6 +33,26 @@ class Client
     {
         $this->apiId = $apiId;
         $this->apiKey = $apiKey;
+    }
+
+    /**
+     * @return HttpClient
+     */
+    public function getHttpClient()
+    {
+        if (!$this->httpClient) {
+            return new HttpClient(['timeout' => 20]);
+        }
+
+        return $this->httpClient;
+    }
+
+    /**
+     * @param ClientInterface $client
+     */
+    public function setHttpClient(ClientInterface $client)
+    {
+        $this->httpClient = $client;
     }
 
     /**
@@ -49,14 +76,14 @@ class Client
      * @param array  $params
      * @param array  $headers
      *
-     * @throws ClientException
+     * @throws Exception
      *
      * @return array
      */
     public function send($uri, $params = [], $headers = [])
     {
         // apply credentials to all api calls except integration/ips, which doesn't require them.
-        if (false !== strpos($uri, 'integration/ips')) {
+        if (false === strpos($uri, 'integration/ips')) {
             $params = array_merge($params, [
                 'api_id' => $this->apiId,
                 'api_key' => $this->apiKey,
@@ -64,8 +91,7 @@ class Client
         }
 
         $request = new Request('POST', $uri, $headers);
-        $client = new HttpClient(['timeout' => 20]);
-        $response = $client->send($request, ['form_params' => $params]);
+        $response = $this->getHttpClient()->send($request, ['form_params' => $params]);
         $data = json_decode($response->getBody(), true);
 
         if (null === $data) {

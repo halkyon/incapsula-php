@@ -17,14 +17,16 @@ foreach ($paths as $path) {
     }
 }
 if (false === $autoloaded) {
-    throw new Exception('Please run composer to set up project dependencies');
+    throw new Exception('Please run composer install to set up project dependencies');
 }
 
 use Incapsula\Command\IntegrationIpsCommand;
 use Incapsula\Command\CustomCertificateUploadCommand;
+use Incapsula\Command\SitesListCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
 $application->add(new IntegrationIpsCommand());
 $application->add(new CustomCertificateUploadCommand());
+$application->add(new SitesListCommand());
 $application->run();

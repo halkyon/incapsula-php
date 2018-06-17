@@ -10,6 +10,8 @@ use GuzzleHttp\Middleware;
 
 class HttpClient extends Client
 {
+    private $retryStatusCodes = [500, 502, 503, 504, 429];
+
     public function __construct(array $config = [])
     {
         $handler = HandlerStack::create(new CurlHandler());
@@ -28,7 +30,7 @@ class HttpClient extends Client
                 if ($exception instanceof ConnectException) {
                     return true;
                 }
-                if ($response && in_array($response->getStatusCode(), [500, 502, 503, 504, 429], true)) {
+                if ($response && in_array($response->getStatusCode(), $this->retryStatusCodes, true)) {
                     return true;
                 }
 
