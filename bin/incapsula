@@ -20,13 +20,19 @@ if (false === $autoloaded) {
     throw new Exception('Please run composer install to set up project dependencies');
 }
 
-use Incapsula\Command\IntegrationIpsCommand;
-use Incapsula\Command\CustomCertificateUploadCommand;
-use Incapsula\Command\SitesListCommand;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Finder\Finder;
 
 $application = new Application();
-$application->add(new IntegrationIpsCommand());
-$application->add(new CustomCertificateUploadCommand());
-$application->add(new SitesListCommand());
+$finder = new Finder();
+$files = $finder->files()->in(__DIR__.'/../src/Command')->notPath('AbstractCommand');
+foreach ($files as $file) {
+    $className = sprintf('Incapsula\\Command\\%s', strtok($file->getFileName(), '.'));
+    $reflection = new ReflectionClass($className);
+
+    if ($reflection->isInstantiable()) {
+        $application->add($reflection->newInstance());
+    }
+}
+
 $application->run();
