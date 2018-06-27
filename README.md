@@ -88,6 +88,8 @@ Use the integration API to retrieve Incapsula IP ranges:
 ```php
 $client = new Incapsula\Client(null, null);
 $ips = $client->integration()->ips();
+var_dump($ips['ipRanges']);
+var_dump($ips['ipv6Ranges']);
 ```
 
 Note that retrieving IP ranges doesn't require API credentials, hence the usage of `null` for arguments.
