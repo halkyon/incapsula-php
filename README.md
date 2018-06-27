@@ -57,7 +57,7 @@ incapsula sites:list
 incapsula customcertificate:upload <site-id> <certificate-path> <private-key-path>
 ```
 
-### Example SDK usage
+## Example SDK usage
 
 Use the sites API to enumerate all available sites, create a new site, upload a custom certitificate,
 then remove what was created:
