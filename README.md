@@ -4,7 +4,7 @@ WORK IN PROGRESS! Some or all of this may end up changing rapidly.
 
 ## Introduction
 
-This project contains a PHP SDK to use the Incapsula API programatically, as well as providing
+This project contains a PHP SDK to use the Incapsula API programmatically, as well as providing
 command line tools for executing various tasks against the Incapsula API.
 
 Currently only a few commands are available. This is currently a work in progress.
