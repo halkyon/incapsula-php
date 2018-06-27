@@ -25,7 +25,7 @@ use Symfony\Component\Finder\Finder;
 
 $application = new Application();
 $finder = new Finder();
-$files = $finder->files()->in(__DIR__.'/../src/Command')->notPath('AbstractCommand');
+$files = $finder->files()->in(__DIR__.'/../src/Command');
 foreach ($files as $file) {
     $className = sprintf('Incapsula\\Command\\%s', strtok($file->getFileName(), '.'));
     $reflection = new ReflectionClass($className);
