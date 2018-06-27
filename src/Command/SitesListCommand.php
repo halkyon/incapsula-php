@@ -28,16 +28,17 @@ class SitesListCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $api = $this->client->sites();
         $data = [];
-        $pageNum = 0;
+        $page = 0;
 
         while (true) {
-            $resp = $this->client->sites()->list(50, $pageNum);
+            $resp = $api->list(50, $page);
             if (empty($resp['sites'])) {
                 break;
             }
             $data = array_merge($data, $resp['sites']);
-            ++$pageNum;
+            ++$page;
         }
 
         $sites = array_map(function ($site) {
