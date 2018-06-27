@@ -53,7 +53,7 @@ class CredentialProvider
      */
     public static function ini($profile = null, $filename = null)
     {
-        $filename = $filename ?: (self::getHomeDir().'/.incapsula/credentials');
+        $filename = $filename ?: sprintf('%s/.incapsula/credentials', self::getHomeDir());
         $profile = $profile ?: self::defaultProfile();
 
         if (!is_readable($filename)) {
@@ -98,6 +98,6 @@ class CredentialProvider
         $homeDrive = getenv('HOMEDRIVE');
         $homePath = getenv('HOMEPATH');
 
-        return ($homeDrive && $homePath) ? $homeDrive.$homePath : null;
+        return ($homeDrive && $homePath) ? sprintf('%s%s', $homeDrive, $homePath) : null;
     }
 }
