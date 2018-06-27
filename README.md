@@ -27,7 +27,7 @@ incapsula_api_id = 123
 incapsula_api_key = 1234-5678
 ```
 
-Additional profiles can be added by defining more `[section]` in the file. These are then used
+Additional profiles can be added by defining more `[section]`s in the file. These are then used
 by passing the `--profile <name>` option to commands.
 
 ## Usage
@@ -35,11 +35,10 @@ by passing the `--profile <name>` option to commands.
 Run `./bin/incapsula` to show a listing of all available commands.
 
 Some commands have a `--json` argument which returns as JSON instead of output as a table.
-To switch between credentials in your `~/.incapsula/credentials`, use the `--profile <name>` option.
 
-## Example commands
+## Example command usage
 
-### Show IP ranges
+### List IP ranges
 
 ```
 incapsula integration:ips
