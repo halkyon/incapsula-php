@@ -38,7 +38,7 @@ class CredentialProvider
     }
 
     /**
-     * Credentials provider that creates credentials using an ini file stored
+     * Provider that creates credentials using an ini file stored
      * in the current user's home directory.
      *
      * @param null|string $profile  Profile to use. If not specified will use
