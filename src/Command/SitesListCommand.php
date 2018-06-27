@@ -29,7 +29,7 @@ class SitesListCommand extends AbstractCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $api = $this->client->sites();
-        $data = [];
+        $sites = [];
         $page = 0;
 
         while (true) {
@@ -37,17 +37,9 @@ class SitesListCommand extends AbstractCommand
             if (empty($resp['sites'])) {
                 break;
             }
-            $data = array_merge($data, $resp['sites']);
+            $sites = array_merge($sites, $resp['sites']);
             ++$page;
         }
-
-        $sites = array_map(function ($site) {
-            return [
-                'site_id' => $site['site_id'],
-                'status' => $site['status'],
-                'domain' => $site['domain'],
-            ];
-        }, $data);
 
         if (true === $input->getOption('json')) {
             $output->write(json_encode($sites));
