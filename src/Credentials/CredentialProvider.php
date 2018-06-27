@@ -13,7 +13,7 @@ class CredentialProvider
     const ENV_KEY = 'INCAPSULA_API_KEY';
 
     /**
-     * Get the default profile, either defined as ENV_PROFILE then
+     * Get the default profile, either defined as ENV_PROFILE or
      * falling back to "default".
      *
      * @return string
@@ -24,8 +24,7 @@ class CredentialProvider
     }
 
     /**
-     * Provider that creates credentials from environment variables
-     * INCAPSULA_API_ID, and INCAPSULA_API_KEY.
+     * Provider that creates credentials from environment variables.
      *
      * @return null|Credentials
      */
