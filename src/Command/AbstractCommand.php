@@ -3,7 +3,6 @@
 namespace Incapsula\Command;
 
 use Incapsula\Client;
-use Incapsula\Credentials\CredentialProvider;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\Inputinterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -18,7 +17,7 @@ abstract class AbstractCommand extends Command
 
     protected function configure()
     {
-        $this->addOption('profile', 'p', InputOption::VALUE_OPTIONAL, 'Incapsula profile', 'default');
+        $this->addOption('profile', 'p', InputOption::VALUE_OPTIONAL, 'Incapsula profile');
     }
 
     /**
@@ -27,11 +26,8 @@ abstract class AbstractCommand extends Command
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $credentials = CredentialProvider::env();
-        if (null === $credentials) {
-            $credentials = CredentialProvider::ini($input->getParameterOption(['--profile', '-p']));
-        }
-
-        $this->client = new Client($credentials->getApiId(), $credentials->getApiKey());
+        $this->client = new Client([
+            'profile' => $input->getParameterOption(['--profile', '-p']),
+        ]);
     }
 }

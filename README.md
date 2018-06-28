@@ -62,7 +62,7 @@ Use the sites API to enumerate all available sites, create a new site, upload a 
 then remove what was created:
 
 ```php
-$client = new Incapsula\Client('<api-id>', '<api-key>');
+$client = new Incapsula\Client();
 $sitesApi = $client->sites();
 
 $sites = $sitesApi->list();
@@ -85,10 +85,8 @@ $sitesApi->delete($site['site_id']);
 Use the integration API to retrieve Incapsula IP ranges:
 
 ```php
-$client = new Incapsula\Client(null, null);
+$client = new Incapsula\Client();
 $ips = $client->integration()->ips();
 var_dump($ips['ipRanges']);
 var_dump($ips['ipv6Ranges']);
 ```
-
-Note that retrieving IP ranges doesn't require API credentials, hence the usage of `null` for arguments.
