@@ -18,6 +18,21 @@ use PHPUnit\Framework\TestCase;
 final class ClientTest extends TestCase
 {
     /**
+     * @var null|Client
+     */
+    private $client;
+
+    protected function setUp()
+    {
+        $this->client = new Client(['credentials' => new Credentials('fakeid', 'fakekey')]);
+    }
+
+    protected function tearDown()
+    {
+        $this->client = null;
+    }
+
+    /**
      * @covers ::send
      */
     public function testGoodResponse()
@@ -27,9 +42,8 @@ final class ClientTest extends TestCase
             new Response(200, [], file_get_contents(__DIR__.'/Responses/good_response.json')),
         ], $history);
 
-        $client = new Client(['credentials' => new Credentials('fakeid', 'fakekey')]);
-        $client->setHttpClient($httpClient);
-        $response = $client->send('https://dummy.incapsula.lan/api/something/v1/foo');
+        $this->client->setHttpClient($httpClient);
+        $response = $this->client->send('https://dummy.incapsula.lan/api/something/v1/foo');
         $request = $history[0]['request'];
 
         $this->assertCount(1, $history);
@@ -52,9 +66,8 @@ final class ClientTest extends TestCase
 
         $this->expectException('Exception');
 
-        $client = new Client(['credentials' => new Credentials(null, null)]);
-        $client->setHttpClient($httpClient);
-        $client->send('https://dummy.incapsula.lan/api/something/v1/foo');
+        $this->client->setHttpClient($httpClient);
+        $this->client->send('https://dummy.incapsula.lan/api/something/v1/foo');
     }
 
     /**
