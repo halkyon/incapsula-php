@@ -7,7 +7,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
-use Incapsula\Client as IncapsulaClient;
+use Incapsula\Client;
 use Incapsula\Credentials\Credentials;
 use PHPUnit\Framework\TestCase;
 
@@ -24,7 +24,7 @@ final class ClientTest extends TestCase
             new Response(200, [], file_get_contents(__DIR__.'/Responses/good_response.json')),
         ], $history);
 
-        $client = new IncapsulaClient(['credentials' => new Credentials('fakeid', 'fakekey')]);
+        $client = new Client(['credentials' => new Credentials('fakeid', 'fakekey')]);
         $client->setHttpClient($httpClient);
         $response = $client->send('https://dummy.incapsula.lan/api/something/v1/foo');
         $request = $history[0]['request'];
