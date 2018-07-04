@@ -17,6 +17,28 @@ use PHPUnit\Framework\TestCase;
  */
 final class ClientTest extends TestCase
 {
+    public function testGoodResponse()
+    {
+        $history = [];
+        $httpClient = $this->createHttpClient([
+            new Response(200, [], file_get_contents(__DIR__.'/Responses/good_response.json')),
+        ], $history);
+
+        $client = new IncapsulaClient(['credentials' => new Credentials(null, null)]);
+        $client->setHttpClient($httpClient);
+        $response = $client->send('https://dummy.incapsula.lan/api/something/v1/foo');
+
+        $this->assertCount(1, $history, 'One API call was made');
+        $this->assertSame(
+            'https://dummy.incapsula.lan/api/something/v1/foo',
+            (string) $history[0]['request']->getUri(),
+            'The API call made was the same that was requested'
+        );
+
+        $this->assertSame(0, $response['res'], 'Good response code');
+        $this->assertSame('OK', $response['res_message'], 'Good response message');
+    }
+
     public function testBadResponse()
     {
         $httpClient = $this->createHttpClient([
