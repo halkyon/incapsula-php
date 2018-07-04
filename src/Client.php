@@ -13,7 +13,7 @@ use Incapsula\Credentials\Credentials;
 class Client
 {
     /**
-     * @var null|Credentials
+     * @var Credentials
      */
     private $credentials;
 

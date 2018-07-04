@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 final class ClientTest extends TestCase
 {
     /**
-     * @var null|Client
+     * @var Client
      */
     private $client;
 

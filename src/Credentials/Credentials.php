@@ -5,12 +5,12 @@ namespace Incapsula\Credentials;
 class Credentials
 {
     /**
-     * @var null|string
+     * @var string
      */
     private $apiId;
 
     /**
-     * @var null|string
+     * @var string
      */
     private $apiKey;
 

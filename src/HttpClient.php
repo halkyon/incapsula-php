@@ -2,13 +2,13 @@
 
 namespace Incapsula;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 
-class HttpClient extends Client
+class HttpClient extends GuzzleClient
 {
     private $retryStatusCodes = [500, 502, 503, 504, 429];
 
