@@ -13,10 +13,13 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- * @coversNothing
+ * @covers \Client
  */
 final class ClientTest extends TestCase
 {
+    /**
+     * @covers \Client::send
+     */
     public function testGoodResponse()
     {
         $history = [];
@@ -38,6 +41,9 @@ final class ClientTest extends TestCase
         $this->assertSame('OK', $response['res_message'], 'Good response message');
     }
 
+    /**
+     * @covers \Client::send
+     */
     public function testBadResponse()
     {
         $httpClient = $this->createHttpClient([
@@ -51,6 +57,10 @@ final class ClientTest extends TestCase
         $client->send('https://dummy.incapsula.lan/api/something/v1/foo');
     }
 
+    /**
+     * @param Response[] $responses
+     * @param array      $container
+     */
     private function createHttpClient(array $responses = [], array &$container = [])
     {
         $history = Middleware::history($container);
