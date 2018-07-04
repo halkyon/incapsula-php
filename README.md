@@ -1,3 +1,6 @@
+[![CircleCI](https://circleci.com/gh/halkyon/incapsula-php.svg?style=shield)](https://circleci.com/gh/halkyon/incapsula-php)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/halkyon/incapsula-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/halkyon/incapsula-php/?branch=master)
+
 # Incapsula PHP SDK
 
 WORK IN PROGRESS! Some or all of this may end up changing rapidly.
