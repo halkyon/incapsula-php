@@ -21,7 +21,7 @@ jobs:
       - persist_to_workspace:
           root: /home/circleci/halkyon
           paths:
-            - salus
+            - incapsula-php
   tests:
     working_directory: /home/circleci/halkyon/incapsula-php
     parallelism: 1
