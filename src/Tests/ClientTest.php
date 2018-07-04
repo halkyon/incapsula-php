@@ -2,7 +2,7 @@
 
 namespace Incapsula\Tests;
 
-use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
@@ -58,6 +58,6 @@ final class ClientTest extends TestCase
         $handler = HandlerStack::create($mock);
         $handler->push($history);
 
-        return new GuzzleClient(['handler' => $handler]);
+        return new HttpClient(['handler' => $handler]);
     }
 }
