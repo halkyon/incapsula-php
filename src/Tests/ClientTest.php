@@ -13,12 +13,12 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- * @covers \Client
+ * @coversDefaultClass \Incapsula\Client
  */
 final class ClientTest extends TestCase
 {
     /**
-     * @covers \Client::send
+     * @covers ::send
      */
     public function testGoodResponse()
     {
@@ -42,7 +42,7 @@ final class ClientTest extends TestCase
     }
 
     /**
-     * @covers \Client::send
+     * @covers ::send
      */
     public function testBadResponse()
     {
