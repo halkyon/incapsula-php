@@ -46,7 +46,7 @@ final class ClientTest extends TestCase
 
         $this->expectException('Exception');
 
-        $client = new IncapsulaClient(['credentials' => new Credentials(null, null)]);
+        $client = new Client(['credentials' => new Credentials(null, null)]);
         $client->setHttpClient($httpClient);
         $client->send('https://dummy.incapsula.lan/api/something/v1/foo');
     }
