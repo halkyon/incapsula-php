@@ -7,18 +7,15 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use Incapsula\Api\IntegrationApi;
 use Incapsula\Api\SitesApi;
+use Incapsula\Credentials\CredentialProvider;
+use Incapsula\Credentials\Credentials;
 
 class Client
 {
     /**
-     * @var null|string
+     * @var Credentials
      */
-    private $apiId;
-
-    /**
-     * @var null|string
-     */
-    private $apiKey;
+    private $credentials;
 
     /**
      * @var ClientInterface
@@ -26,13 +23,20 @@ class Client
     private $httpClient;
 
     /**
-     * @param string $apiId
-     * @param string $apiKey
+     * @param array $options
      */
-    public function __construct($apiId, $apiKey)
+    public function __construct(array $options = [])
     {
-        $this->apiId = $apiId;
-        $this->apiKey = $apiKey;
+        $profile = isset($options['profile']) ? $options['profile'] : null;
+        $credentials = isset($options['credentials']) ? $options['credentials'] : null;
+        if (null === $credentials) {
+            $credentials = CredentialProvider::env();
+            if (null === $credentials) {
+                $credentials = CredentialProvider::ini($profile);
+            }
+        }
+
+        $this->credentials = $credentials;
     }
 
     /**
@@ -85,8 +89,8 @@ class Client
         // apply credentials to all api calls except integration/ips, which doesn't require them.
         if (false === strpos($uri, 'integration/ips')) {
             $params = array_merge($params, [
-                'api_id' => $this->apiId,
-                'api_key' => $this->apiKey,
+                'api_id' => $this->credentials->getApiId(),
+                'api_key' => $this->credentials->getApiKey(),
             ]);
         }
 

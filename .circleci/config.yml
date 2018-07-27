@@ -1,0 +1,57 @@
+version: 2
+jobs:
+  build:
+    working_directory: /home/circleci/halkyon/incapsula-php
+    parallelism: 1
+    shell: /bin/bash --login
+    docker:
+      - image: circleci/php:7.1-cli-jessie
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "composer.json" }}
+            - v1-dependencies-
+      - run: sudo rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - run: composer install --prefer-dist --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile
+      - save_cache:
+          paths:
+            - vendor
+          key: v1-dependencies-{{ checksum "composer.json" }}
+      - persist_to_workspace:
+          root: /home/circleci/halkyon
+          paths:
+            - incapsula-php
+  tests:
+    working_directory: /home/circleci/halkyon/incapsula-php
+    parallelism: 1
+    shell: /bin/bash --login
+    docker:
+      - image: circleci/php:7.1-cli-jessie
+    steps:
+      - attach_workspace:
+          at: /home/circleci/halkyon
+      - run: sudo rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - run: vendor/bin/phpunit
+  php-cs:
+    working_directory: /home/circleci/halkyon/incapsula-php
+    parallelism: 1
+    shell: /bin/bash --login
+    docker:
+      - image: circleci/php:7.1-cli-jessie
+    steps:
+      - attach_workspace:
+          at: /home/circleci/halkyon
+      - run: sudo rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - run: vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - tests:
+          requires:
+            - build
+      - php-cs:
+          requires:
+            - build

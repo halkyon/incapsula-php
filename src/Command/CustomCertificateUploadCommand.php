@@ -11,17 +11,17 @@ class CustomCertificateUploadCommand extends AbstractCommand
     /**
      * @var string
      */
-    private $siteId = '';
+    private $siteId;
 
     /**
      * @var string
      */
-    private $certificatePath = '';
+    private $certificatePath;
 
     /**
      * @var string
      */
-    private $privateKeyPath = '';
+    private $privateKeyPath;
 
     protected function configure()
     {
