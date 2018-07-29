@@ -81,7 +81,7 @@ class SitesApi extends AbstractApi
      */
     public function purgeCache($siteId, $purgePattern = "")
     {
-        return $this->client->send(sprintf('%s/purge', $this->apiUri), [
+        return $this->client->send(sprintf('%s/cache/purge', $this->apiUri), [
             'site_id' => $siteId,
             'purge_pattern' => $purgePattern
             ]);
