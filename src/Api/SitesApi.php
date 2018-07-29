@@ -69,4 +69,21 @@ class SitesApi extends AbstractApi
             'site_id' => $siteId,
         ]);
     }
+    /**
+     * @param string $siteId site to purge
+     * @param string $purgePattern is optional but to purge specific resources the format is as follows
+     * purge all urls that contain text requires no additional formatting, e.g. image.jpg,
+     * or to purge URLs starting with a pattern use  '^' e.g. "^maps/" ,
+     * or to purge all URLs that end with a pattern use '$' e.g. ".jpg$"
+     * See incapsula docs for details
+     * https://docs.incapsula.com/Content/API/sites-api.htm#Purge
+     * @return array
+     */
+    public function purgeCache($siteId, $purgePattern = "")
+    {
+        return $this->client->send(sprintf('%s/purge', $this->apiUri), [
+            'site_id' => $siteId,
+            'purge_pattern' => $purgePattern
+            ]);
+    }
 }
