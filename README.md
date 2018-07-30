@@ -3,8 +3,6 @@
 
 # Incapsula PHP SDK
 
-WORK IN PROGRESS! Some or all of this may end up changing rapidly.
-
 ## Introduction
 
 This project contains a PHP SDK to use the Incapsula API programmatically, as well as providing
