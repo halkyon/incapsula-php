@@ -12,7 +12,8 @@ class SitesApi extends AbstractApi
      *
      * @return array
      */
-    public function list($pageSize = 50, $pageNum = 0)
+    
+     public function list($pageSize = 50, $pageNum = 0)
     {
         return $this->client->send(sprintf('%s/list', $this->apiUri), [
             'page_size' => $pageSize,
@@ -25,6 +26,7 @@ class SitesApi extends AbstractApi
      *
      * @return array
      */
+    
     public function add($params = [])
     {
         return $this->client->send(sprintf('%s/add', $this->apiUri), $params);
@@ -35,7 +37,8 @@ class SitesApi extends AbstractApi
      *
      * @return array
      */
-    public function delete($siteId)
+    
+     public function delete($siteId)
     {
         return $this->client->send(sprintf('%s/delete', $this->apiUri), [
             'site_id' => $siteId,
@@ -49,7 +52,8 @@ class SitesApi extends AbstractApi
      *
      * @return array
      */
-    public function uploadCustomCertificate($siteId, $certificate, $privateKey)
+    
+     public function uploadCustomCertificate($siteId, $certificate, $privateKey)
     {
         return $this->client->send(sprintf('%s/uploadCustomCertificate', $this->apiUri), [
             'site_id' => $siteId,
@@ -63,12 +67,14 @@ class SitesApi extends AbstractApi
      *
      * @return array
      */
-    public function removeCustomCertificate($siteId)
+    
+     public function removeCustomCertificate($siteId)
     {
         return $this->client->send(sprintf('%s/removeCustomCertificate', $this->apiUri), [
             'site_id' => $siteId,
         ]);
     }
+    
     /**
      * @param string $siteId site to purge
      * @param string $purgePattern is optional but to purge specific resources the format is as follows
@@ -79,11 +85,12 @@ class SitesApi extends AbstractApi
      * https://docs.incapsula.com/Content/API/sites-api.htm#Purge
      * @return array
      */
-    public function purgeCache($siteId, $purgePattern = "")
+    
+     public function purgeCache($siteId, $purgePattern = "")
     {
         return $this->client->send(sprintf('%s/cache/purge', $this->apiUri), [
             'site_id' => $siteId,
             'purge_pattern' => $purgePattern
-            ]);
+        ]);
     }
 }

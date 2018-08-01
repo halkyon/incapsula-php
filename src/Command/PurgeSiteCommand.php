@@ -5,7 +5,6 @@ namespace Incapsula\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Incapsula\Api;
 
 class PurgeSiteCommand extends AbstractCommand{
     /**
@@ -23,8 +22,8 @@ class PurgeSiteCommand extends AbstractCommand{
         $this
             ->setName('site:purge')
             ->setDescription('Purge URLs from a given site id')
-            ->addArgument('site-id',InputArgument::REQUIRED,'incapsula id of site to purge')
-            ->addArgument('resource-pattern',InputArgument::OPTIONAL,'string to match in the URL to be purged',"")
+            ->addArgument('site-id', InputArgument::REQUIRED, 'incapsula id of site to purge')
+            ->addArgument('resource-pattern', InputArgument::OPTIONAL, 'string to match in the URL to be purged',"")
         ;
     }
     /**
@@ -47,7 +46,7 @@ class PurgeSiteCommand extends AbstractCommand{
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->client->sites()->purgeCache($this->siteId,$this->resourcePattern);
+        $this->client->sites()->purgeCache($this->siteId ,$this->resourcePattern);
         return 0;
     }
 }
