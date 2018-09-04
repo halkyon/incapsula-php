@@ -16,7 +16,7 @@ class AccountsApi extends AbstractApi
     {
         return $this->client->send(sprintf('%s/subaccounts/delete', $this->apiUri), [
             'sub_account_id' => $subAccountId,
-        ]);  
+        ]);
     }
 
     /**
@@ -32,12 +32,14 @@ class AccountsApi extends AbstractApi
      *	The newly created account's parent id. If not specified, the invoking account will be assigned as the parent account. 	Optional:Yes
      *ref_id
      *   Customer specific identifier for this operation. 	Optional:Yes
+     *
+     * @param mixed $subAccountName
      */
     public function add($subAccountName)
     {
         return $this->client->send(sprintf('%s/subaccounts/add', $this->apiUri), [
-            'sub_account_name' => $$subAccountName,
-        ]);   
+            'sub_account_name' => ${$subAccountName},
+        ]);
     }
 
     /**
@@ -66,6 +68,8 @@ class AccountsApi extends AbstractApi
      *In order to use the token, the user must use the following link:
      *
      *https://my.incapsula.com/?token={generated_token}
+     *
+     * @param mixed $accountId
      */
     public function getLoginToken($accountId)
     {
