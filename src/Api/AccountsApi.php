@@ -38,7 +38,7 @@ class AccountsApi extends AbstractApi
     public function add($subAccountName)
     {
         return $this->client->send(sprintf('%s/subaccounts/add', $this->apiUri), [
-            'sub_account_name' => ${$subAccountName},
+            'sub_account_name' => $subAccountName,
         ]);
     }
 
