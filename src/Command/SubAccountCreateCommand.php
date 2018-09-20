@@ -6,13 +6,13 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-
 class SubAccountCreateCommand extends AbstractCommand
 {
     /**
      * @var string
      */
     private $accountName;
+
     protected function configure()
     {
         parent::configure();
@@ -22,6 +22,7 @@ class SubAccountCreateCommand extends AbstractCommand
             ->addArgument('account-name', InputArgument::REQUIRED, 'sub account name')
         ;
     }
+
     /**
      * @param InputInterface  $input
      * @param OutputInterface $output
@@ -32,7 +33,8 @@ class SubAccountCreateCommand extends AbstractCommand
 
         $this->accountName = $input->getArgument('account-name');
     }
-        /**
+
+    /**
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
