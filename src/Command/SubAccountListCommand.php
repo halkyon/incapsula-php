@@ -2,11 +2,10 @@
 
 namespace Incapsula\Command;
 
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class SubAccountListCommand extends AbstractCommand
 {
@@ -63,7 +62,7 @@ class SubAccountListCommand extends AbstractCommand
         }
 
         $table = new Table($output);
-        $table->setHeaders(['Name','AccountID']);
+        $table->setHeaders(['Name', 'AccountID']);
         foreach ($subAcc as $acc) {
             $table->addRow([$acc['sub_account_name'], $acc['sub_account_id']]);
         }

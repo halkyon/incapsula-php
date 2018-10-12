@@ -42,7 +42,7 @@ class AccountLoginTokenCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $token =$this->client->Accounts()->getLoginToken($this->accountID);
+        $token = $this->client->Accounts()->getLoginToken($this->accountID);
         $output->write('https://my.incapsula.com/?token='.$token['generated_token'].PHP_EOL);
     }
 }
