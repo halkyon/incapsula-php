@@ -30,7 +30,7 @@ class HttpClient extends GuzzleClient
                 if ($exception instanceof ConnectException) {
                     return true;
                 }
-                if ($response && in_array($response->getStatusCode(), $this->retryStatusCodes, true)) {
+                if ($response && \in_array($response->getStatusCode(), $this->retryStatusCodes, true)) {
                     return true;
                 }
 
