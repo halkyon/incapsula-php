@@ -42,6 +42,6 @@ class SubAccountDeleteCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->client->Accounts()->delete($this->accountID);
+        $this->client->accounts()->delete($this->accountID);
     }
 }

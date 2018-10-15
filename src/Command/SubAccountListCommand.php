@@ -42,7 +42,7 @@ class SubAccountListCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $api = $this->client->Accounts();
+        $api = $this->client->accounts();
         $subAcc = [];
         $page = 0;
 

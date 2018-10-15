@@ -42,6 +42,6 @@ class SubAccountCreateCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->client->Accounts()->add($this->accountName);
+        $this->client->accounts()->add($this->accountName);
     }
 }

@@ -77,11 +77,11 @@ class Client
     }
 
     /**
-     * @return AccountsApi
+     * @return accountsApi
      */
-    public function Accounts()
+    public function accounts()
     {
-        return new AccountsApi($this);
+        return new accountsApi($this);
     }
 
     /**
