@@ -1,5 +1,5 @@
-[![CircleCI](https://img.shields.io/circleci/project/github/halkyon/incapsula-php.svg?style=flat-square)](https://circleci.com/gh/halkyon/incapsula-php)
-[![Code Quality](https://img.shields.io/scrutinizer/g/halkyon/incapsula-php.svg?style=flat-square)](https://scrutinizer-ci.com/g/halkyon/incapsula-php)
+[![CircleCI](https://img.shields.io/circleci/project/github/halkyon/incapsula-php/master.svg?style=flat-square)](https://circleci.com/gh/halkyon/incapsula-php)
+[![Code Quality](https://img.shields.io/scrutinizer/g/halkyon/incapsula-php/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/halkyon/incapsula-php)
 
 # Incapsula PHP SDK
 
