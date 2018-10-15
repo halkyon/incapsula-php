@@ -5,6 +5,7 @@ namespace Incapsula;
 use Exception;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
+use Incapsula\Api\AccountsApi;
 use Incapsula\Api\IntegrationApi;
 use Incapsula\Api\SitesApi;
 use Incapsula\Credentials\CredentialProvider;
@@ -73,6 +74,14 @@ class Client
     public function sites()
     {
         return new SitesApi($this);
+    }
+
+    /**
+     * @return accountsApi
+     */
+    public function accounts()
+    {
+        return new accountsApi($this);
     }
 
     /**
