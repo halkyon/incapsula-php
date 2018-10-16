@@ -88,4 +88,18 @@ class SitesApi extends AbstractApi
             'purge_pattern' => $purgePattern,
         ]);
     }
+
+    /**
+     * @param string $siteId        site to move
+     * @param string $destAccountId account id to move the site to
+     *
+     * @return array containing response from incapsula with new dns details
+     */
+    public function moveSite($siteId, $destAccountId)
+    {
+        return $this->client->send(sprintf('%s/moveSite', $this->apiUri), [
+            'site_id' => $siteId,
+            'destination_account_id' => $destAccountId,
+        ]);
+    }
 }
