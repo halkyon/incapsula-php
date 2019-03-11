@@ -51,7 +51,7 @@ class SitesApi extends AbstractApi
      */
     public function uploadCustomCertificate($siteId, $certificate, $privateKey)
     {
-        return $this->client->send(sprintf('%s/uploadCustomCertificate', $this->apiUri), [
+        return $this->client->send(sprintf('%s/customCertificate/upload', $this->apiUri), [
             'site_id' => $siteId,
             'certificate' => base64_encode($certificate),
             'private_key' => base64_encode($privateKey),
