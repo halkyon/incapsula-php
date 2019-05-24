@@ -2,6 +2,7 @@
     "name": "halkyon/incapsula-php",
     "require": {
         "php": ">=7.1",
+        "ext-json": "*",
         "guzzlehttp/guzzle": "^6.0",
         "symfony/console": "^3.0",
         "symfony/finder": "^3.0"
