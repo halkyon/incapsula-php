@@ -95,6 +95,30 @@ class Client
      */
     public function send($uri, $params = [], $headers = [])
     {
+        $data = $this->sendRaw($uri, $params, $headers);
+
+        if (0 !== $data['res']) {
+            throw new Exception(sprintf('Bad response: %s (code: %s)', $data['res_message'], $data['res']));
+        }
+
+        return $data;
+    }
+
+    /**
+     * Sends a request to the Incapsula API and returns the raw response (with no checking or parsing done, beyond
+     * ensuring there was at least *some* response). Useful for when the API endpoint does not implement the expected
+     * 'res' structure expected by self::send().
+     *
+     * @param string $uri
+     * @param array  $params
+     * @param array  $headers
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return array
+     */
+    public function sendRaw($uri, $params = [], $headers = [])
+    {
         // apply credentials to all api calls except integration/ips, which doesn't require them.
         if (false === strpos($uri, 'integration/ips')) {
             $params = array_merge($params, [
@@ -109,9 +133,6 @@ class Client
 
         if (null === $data) {
             throw new Exception(sprintf('Could not parse JSON (code: %s)', json_last_error()));
-        }
-        if (0 !== $data['res']) {
-            throw new Exception(sprintf('Bad response: %s (code: %s)', $data['res_message'], $data['res']));
         }
 
         return $data;

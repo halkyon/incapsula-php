@@ -28,18 +28,7 @@ class SitesListCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $api = $this->client->sites();
-        $sites = [];
-        $page = 0;
-
-        while (true) {
-            $resp = $api->list(50, $page);
-            if (empty($resp['sites'])) {
-                break;
-            }
-            $sites = array_merge($sites, $resp['sites']);
-            ++$page;
-        }
+        $sites = $this->getSites();
 
         if (true === $input->getOption('json')) {
             $output->write(json_encode($sites));
@@ -55,5 +44,23 @@ class SitesListCommand extends AbstractCommand
         $table->render();
 
         return 0;
+    }
+
+    protected function getSites()
+    {
+        $api = $this->client->sites();
+        $sites = [];
+        $page = 0;
+
+        while (true) {
+            $resp = $api->list(50, $page);
+            if (empty($resp['sites'])) {
+                break;
+            }
+            $sites = array_merge($sites, $resp['sites']);
+            ++$page;
+        }
+
+        return $sites;
     }
 }

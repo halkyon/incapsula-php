@@ -12,7 +12,11 @@ Currently only a few commands are available. This is currently a work in progres
 
 ## Installation
 
-TODO
+1. Clone the repo locally: `git clone git@github.com:halkyon/incapsula-php.git`.
+2. Run `composer install` to install dependencies.
+3. Configure your Incapsula API credentials (see below).
+4. Test your credentials using the `./bin/incapsula sites:list` command
+5. See a list of all commands you can run by calling `./bin/incapsula`
 
 ## Configuring credentials
 
@@ -20,6 +24,11 @@ You can define credentials either as environment variables `INCAPSULA_API_ID` an
 or as a credential file located in the current user home directory `~/.incapsula/credentials`.
 
 Order of preference is environment variables first, then ini file.
+
+Note: Environment variables must be actually set as env vars, not just added in a `.env` file in the application root.
+
+If you're confident about the security of your machine, you can define them on the command-line, for example:
+`INCAPSULA_API_ID=ABC123 INCAPSULA_API_KEY=xyz789 ./bin/incapsula sites:list` 
 
 Example ini file:
 ```
@@ -51,6 +60,11 @@ incapsula integration:ips
 incapsula sites:list
 ```
 
+### List all cache rules for all sites
+
+```
+incapsula sites:listcacherules
+```
 ### Upload custom certificate
 
 ```
@@ -91,3 +105,7 @@ $ips = $client->integration()->ips();
 var_dump($ips['ipRanges']);
 var_dump($ips['ipv6Ranges']);
 ```
+
+## Contributing
+
+Before making a pull request, please run the code syntax fixer to make sure the linter works: `vendor/bin/php-cs-fixer fix`.

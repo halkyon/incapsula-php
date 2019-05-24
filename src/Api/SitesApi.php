@@ -102,4 +102,22 @@ class SitesApi extends AbstractApi
             'destination_account_id' => $destAccountId,
         ]);
     }
+
+    /**
+     * @param int $siteId   The site ID to retrieve all cache rules for
+     * @param int $pageSize The number of rules to return per page
+     * @param int $pageNum  The page number to return (if more than one page of results)
+     *
+     * @throws \Exception
+     *
+     * @return array
+     */
+    public function listCacheRules($siteId, $pageSize = 50, $pageNum = 0)
+    {
+        return $this->client->sendRaw(sprintf('%s/performance/caching-rules/list', $this->apiUri), [
+            'site_id' => $siteId,
+            'page_size' => $pageSize,
+            'page_num' => $pageNum,
+        ]);
+    }
 }
