@@ -16,7 +16,6 @@ class SitesListAttributeCommand extends AbstractCommand
         $this
             ->setName('sites:listattribute')
             ->addOption('attribute',null,InputOption::VALUE_REQUIRED, 'json key to inspect')
-            ->addOption('json', null, InputOption::VALUE_NONE, 'Output as JSON')
             ->setDescription('List a config value from all sites')
         ;
     }
@@ -32,12 +31,6 @@ class SitesListAttributeCommand extends AbstractCommand
         $attribute = $input->getOption('attribute');
 
         $sites = $this->getSites();
-
-        if (true === $input->getOption('json')) {
-            $output->write(json_encode($sites));
-
-            return 0;
-        }
 
         $table = new Table($output);
         $table->setHeaders(['Site ID', 'Domain', 'Attribute']);
