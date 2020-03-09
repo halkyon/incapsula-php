@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incapsula\Command;
 
 use Symfony\Component\Console\Helper\Table;
@@ -9,21 +11,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SitesListAttributeCommand extends AbstractCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
         $this
             ->setName('sites:listattribute')
-            ->addOption('attribute',null,InputOption::VALUE_REQUIRED, 'json key to inspect')
+            ->addOption('attribute', null, InputOption::VALUE_REQUIRED, 'json key to inspect')
             ->setDescription('List a config value from all sites')
         ;
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)

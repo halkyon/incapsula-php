@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incapsula;
 
 use GuzzleHttp\Client as GuzzleClient;
@@ -10,6 +12,9 @@ use GuzzleHttp\Middleware;
 
 class HttpClient extends GuzzleClient
 {
+    /**
+     * @var int[]
+     */
     private $retryStatusCodes = [500, 502, 503, 504, 429];
 
     public function __construct(array $config = [])
@@ -20,7 +25,7 @@ class HttpClient extends GuzzleClient
         parent::__construct(array_merge($config, ['handler' => $handler]));
     }
 
-    private function getRetryMiddleware()
+    private function getRetryMiddleware(): callable
     {
         return Middleware::retry(
             function ($retries, $request, $response, $exception) {
@@ -30,7 +35,7 @@ class HttpClient extends GuzzleClient
                 if ($exception instanceof ConnectException) {
                     return true;
                 }
-                if ($response && in_array($response->getStatusCode(), $this->retryStatusCodes, true)) {
+                if ($response && \in_array($response->getStatusCode(), $this->retryStatusCodes, true)) {
                     return true;
                 }
 

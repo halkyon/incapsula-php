@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incapsula\Command;
 
 use Incapsula\Client;
@@ -15,16 +17,12 @@ abstract class AbstractCommand extends Command
      */
     protected $client;
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->addOption('profile', 'p', InputOption::VALUE_OPTIONAL, 'Incapsula profile');
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         $this->client = new Client([
             'profile' => $input->getParameterOption(['--profile', '-p']),

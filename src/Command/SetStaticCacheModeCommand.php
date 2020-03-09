@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incapsula\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
@@ -23,7 +25,7 @@ class SetStaticCacheModeCommand extends AbstractCommand
      */
     private $privateKeyPath;
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -34,29 +36,17 @@ class SetStaticCacheModeCommand extends AbstractCommand
         ;
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
 
         $this->siteId = $input->getArgument('site-id');
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $return_val = $this->client->sites()->setStaticCacheMode(
-            $this->siteId
+        return $this->client->sites()->setStaticCacheMode(
+            $this->siteId,
         );
-
-        return $return_val;
     }
 }

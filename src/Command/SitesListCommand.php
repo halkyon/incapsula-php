@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incapsula\Command;
 
 use Symfony\Component\Console\Helper\Table;
@@ -9,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SitesListCommand extends AbstractCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -20,13 +22,7 @@ class SitesListCommand extends AbstractCommand
         ;
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $sites = $this->getSites();
 
@@ -46,7 +42,7 @@ class SitesListCommand extends AbstractCommand
         return 0;
     }
 
-    protected function getSites()
+    protected function getSites(): array
     {
         $api = $this->client->sites();
         $sites = [];

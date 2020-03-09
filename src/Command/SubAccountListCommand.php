@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incapsula\Command;
 
 use Symfony\Component\Console\Helper\Table;
@@ -14,7 +16,7 @@ class SubAccountListCommand extends AbstractCommand
      */
     private $accountName;
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -25,22 +27,12 @@ class SubAccountListCommand extends AbstractCommand
         ;
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $api = $this->client->accounts();
         $subAcc = [];

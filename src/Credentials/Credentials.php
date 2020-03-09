@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incapsula\Credentials;
 
 class Credentials
@@ -14,28 +16,18 @@ class Credentials
      */
     private $apiKey;
 
-    /**
-     * @param string $apiId
-     * @param string $apiKey
-     */
-    public function __construct($apiId, $apiKey)
+    public function __construct(string $apiId, string $apiKey)
     {
         $this->apiId = $apiId;
         $this->apiKey = $apiKey;
     }
 
-    /**
-     * @return string
-     */
-    public function getApiId()
+    public function getApiId(): string
     {
         return $this->apiId;
     }
 
-    /**
-     * @return string
-     */
-    public function getApiKey()
+    public function getApiKey(): string
     {
         return $this->apiKey;
     }

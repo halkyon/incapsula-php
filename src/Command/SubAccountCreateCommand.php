@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incapsula\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,7 +15,7 @@ class SubAccountCreateCommand extends AbstractCommand
      */
     private $accountName;
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -23,25 +25,17 @@ class SubAccountCreateCommand extends AbstractCommand
         ;
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
 
         $this->accountName = $input->getArgument('account-name');
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->client->accounts()->add($this->accountName);
+
+        return 0;
     }
 }

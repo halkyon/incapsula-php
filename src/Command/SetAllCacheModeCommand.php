@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incapsula\Command;
 
 use function json_encode;
@@ -10,17 +12,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SetAllCacheModeCommand extends SitesListCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
         $this
             ->setName('sites:setCacheMode')
             ->addOption('json', null, InputOption::VALUE_NONE, 'Output as JSON')
-            ->setDescription('List all cache rules for all sites');
+            ->setDescription('List all cache rules for all sites')
+        ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $changes = $this->setCacheMode();
 
@@ -30,9 +33,9 @@ class SetAllCacheModeCommand extends SitesListCommand
             return 0;
         }
 
-        $output->writeln("sites that were changed in this run");
+        $output->writeln('Sites that were changed in this run');
         $table = new Table($output);
-        $table->setHeaders(['Site ID', 'Site Name','Return Message']);
+        $table->setHeaders(['Site ID', 'Site Name', 'Return Message']);
 
         foreach ($changes as $changed) {
             $table->addRow([
@@ -47,20 +50,20 @@ class SetAllCacheModeCommand extends SitesListCommand
         return 0;
     }
 
-    private function setCacheMode()
+    private function setCacheMode(): array
     {
         $api = $this->client->sites();
         $sites = $this->getSites();
         $changed = [];
         foreach ($sites as $site) {
-            $return_val = $this->client->sites()->setStaticCacheMode($site['site_id']);
+            $returnVal = $this->client->sites()->setStaticCacheMode($site['site_id']);
             $mode = $site['acceleration_level'];
-            if ($mode==='advanced'){
-                array_push($changed,[
+            if ('advanced' === $mode) {
+                array_push($changed, [
                     'site_id' => $site['site_id'],
                     'domain' => $site['domain'],
-                    'return' => $return_val['res_message'],
-                    ]);
+                    'return' => $returnVal['res_message'],
+                ]);
             }
         }
 

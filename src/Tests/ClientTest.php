@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incapsula\Tests;
 
 use GuzzleHttp\Client as HttpClient;
@@ -18,16 +20,16 @@ use PHPUnit\Framework\TestCase;
 final class ClientTest extends TestCase
 {
     /**
-     * @var Client
+     * @var null|Client
      */
     private $client;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->client = new Client(['credentials' => new Credentials('fakeid', 'fakekey')]);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->client = null;
     }
@@ -35,7 +37,7 @@ final class ClientTest extends TestCase
     /**
      * @covers ::send
      */
-    public function testGoodResponse()
+    public function testGoodResponse(): void
     {
         $history = [];
         $httpClient = $this->createHttpClient([
@@ -46,19 +48,19 @@ final class ClientTest extends TestCase
         $response = $this->client->send('https://dummy.incapsula.lan/api/something/v1/foo');
         $request = $history[0]['request'];
 
-        $this->assertCount(1, $history);
-        $this->assertSame('application/x-www-form-urlencoded', $request->getHeader('Content-Type')[0]);
-        $this->assertSame('api_id=fakeid&api_key=fakekey', (string) $request->getBody());
-        $this->assertSame('https://dummy.incapsula.lan/api/something/v1/foo', (string) $request->getUri());
+        static::assertCount(1, $history);
+        static::assertSame('application/x-www-form-urlencoded', $request->getHeader('Content-Type')[0]);
+        static::assertSame('api_id=fakeid&api_key=fakekey', (string) $request->getBody());
+        static::assertSame('https://dummy.incapsula.lan/api/something/v1/foo', (string) $request->getUri());
 
-        $this->assertSame(0, $response['res'], 'Good response code');
-        $this->assertSame('OK', $response['res_message'], 'Good response message');
+        static::assertSame(0, $response['res'], 'Good response code');
+        static::assertSame('OK', $response['res_message'], 'Good response message');
     }
 
     /**
      * @covers ::send
      */
-    public function testBadResponse()
+    public function testBadResponse(): void
     {
         $httpClient = $this->createHttpClient([
             new Response(200, [], file_get_contents(__DIR__.'/Responses/bad_response.json')),
@@ -72,9 +74,8 @@ final class ClientTest extends TestCase
 
     /**
      * @param Response[] $responses
-     * @param array      $container
      */
-    private function createHttpClient(array $responses = [], array &$container = [])
+    private function createHttpClient(array $responses = [], array &$container = []): HttpClient
     {
         $history = Middleware::history($container);
         $mock = new MockHandler($responses);

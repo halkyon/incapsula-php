@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incapsula\Credentials;
 
 use Exception;
@@ -15,10 +17,8 @@ class CredentialProvider
     /**
      * Get the default profile, either defined as ENV_PROFILE or
      * falling back to "default".
-     *
-     * @return string
      */
-    public static function defaultProfile()
+    public static function defaultProfile(): string
     {
         return getenv(self::ENV_PROFILE) ?: 'default';
     }
@@ -35,6 +35,8 @@ class CredentialProvider
         if ($key && $secret) {
             return new Credentials($key, $secret);
         }
+
+        return null;
     }
 
     /**
@@ -47,10 +49,8 @@ class CredentialProvider
      *                              than looking in the home directory
      *
      * @throws Exception
-     *
-     * @return Credentials
      */
-    public static function ini($profile = null, $filename = null)
+    public static function ini($profile = null, $filename = null): Credentials
     {
         $filename = $filename ?: sprintf('%s/.incapsula/credentials', self::getHomeDir());
         $profile = $profile ?: self::defaultProfile();

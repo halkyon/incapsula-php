@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incapsula\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
@@ -17,7 +19,7 @@ class PurgeSiteCommand extends AbstractCommand
      */
     protected $resourcePattern;
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -29,11 +31,7 @@ class PurgeSiteCommand extends AbstractCommand
         ;
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
 
@@ -41,13 +39,7 @@ class PurgeSiteCommand extends AbstractCommand
         $this->resourcePattern = $input->getArgument('resource-pattern');
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->client->sites()->purgeCache($this->siteId, $this->resourcePattern);
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incapsula\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,7 +15,7 @@ class AccountLoginTokenCommand extends AbstractCommand
      */
     private $accountID;
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -23,26 +25,18 @@ class AccountLoginTokenCommand extends AbstractCommand
         ;
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
 
         $this->accountID = $input->getArgument('account-id');
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $token = $this->client->accounts()->getLoginToken($this->accountID);
         $output->write('https://my.incapsula.com/?token='.$token['generated_token'].PHP_EOL);
+
+        return 0;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incapsula\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
@@ -23,7 +25,7 @@ class CustomCertificateUploadCommand extends AbstractCommand
      */
     private $privateKeyPath;
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -36,11 +38,7 @@ class CustomCertificateUploadCommand extends AbstractCommand
         ;
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
 
@@ -49,13 +47,7 @@ class CustomCertificateUploadCommand extends AbstractCommand
         $this->privateKeyPath = $input->getArgument('private-key-path');
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->client->sites()->uploadCustomCertificate(
             $this->siteId,

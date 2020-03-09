@@ -1,18 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incapsula\Api;
 
 class SitesApi extends AbstractApi
 {
+    /**
+     * @var string
+     */
     private $apiUri = 'https://my.incapsula.com/api/prov/v1/sites';
 
-    /**
-     * @param int $pageSize
-     * @param int $pageNum
-     *
-     * @return array
-     */
-    public function list($pageSize = 50, $pageNum = 0)
+    public function list(int $pageSize = 50, int $pageNum = 0): array
     {
         return $this->client->send(sprintf('%s/list', $this->apiUri), [
             'page_size' => $pageSize,
@@ -20,46 +19,26 @@ class SitesApi extends AbstractApi
         ]);
     }
 
-    /**
-     * @param array $params
-     *
-     * @return array
-     */
-    public function add($params = [])
+    public function add(array $params = []): array
     {
         return $this->client->send(sprintf('%s/add', $this->apiUri), $params);
     }
-    /**
-     * @param string $siteId
-     *
-     * @return array
-     */
-    public function status($siteId)
+
+    public function status(string $siteId): array
     {
         return $this->client->send(sprintf('%s/status', $this->apiUri), [
             'site_id' => $siteId,
         ]);
     }
-    /**
-     * @param string $siteId
-     *
-     * @return array
-     */
-    public function delete($siteId)
+
+    public function delete(string $siteId): array
     {
         return $this->client->send(sprintf('%s/delete', $this->apiUri), [
             'site_id' => $siteId,
         ]);
     }
 
-    /**
-     * @param string $siteId
-     * @param string $certificate
-     * @param string $privateKey
-     *
-     * @return array
-     */
-    public function uploadCustomCertificate($siteId, $certificate, $privateKey)
+    public function uploadCustomCertificate(string $siteId, string $certificate, string $privateKey): array
     {
         return $this->client->send(sprintf('%s/customCertificate/upload', $this->apiUri), [
             'site_id' => $siteId,
@@ -68,30 +47,14 @@ class SitesApi extends AbstractApi
         ]);
     }
 
-    /**
-     * @param string $siteId
-     *
-     * @return array
-     */
-    public function removeCustomCertificate($siteId)
+    public function removeCustomCertificate(string $siteId): array
     {
         return $this->client->send(sprintf('%s/removeCustomCertificate', $this->apiUri), [
             'site_id' => $siteId,
         ]);
     }
 
-    /**
-     * @param string $siteId       site to purge
-     * @param string $purgePattern is optional but to purge specific resources the format is as follows
-     *                             purge all urls that contain text requires no additional formatting, e.g. image.jpg,
-     *                             or to purge URLs starting with a pattern use  '^' e.g. "^maps/" ,
-     *                             or to purge all URLs that end with a pattern use '$' e.g. ".jpg$"
-     *                             See incapsula docs for details
-     *                             https://docs.incapsula.com/Content/API/sites-api.htm#Purge
-     *
-     * @return array
-     */
-    public function purgeCache($siteId, $purgePattern = '')
+    public function purgeCache(string $siteId, string $purgePattern = ''): array
     {
         return $this->client->send(sprintf('%s/cache/purge', $this->apiUri), [
             'site_id' => $siteId,
@@ -99,13 +62,7 @@ class SitesApi extends AbstractApi
         ]);
     }
 
-    /**
-     * @param string $siteId        site to move
-     * @param string $destAccountId account id to move the site to
-     *
-     * @return array containing response from incapsula with new dns details
-     */
-    public function moveSite($siteId, $destAccountId)
+    public function moveSite(string $siteId, string $destAccountId): array
     {
         return $this->client->send(sprintf('%s/moveSite', $this->apiUri), [
             'site_id' => $siteId,
@@ -113,16 +70,7 @@ class SitesApi extends AbstractApi
         ]);
     }
 
-    /**
-     * @param int $siteId   The site ID to retrieve all cache rules for
-     * @param int $pageSize The number of rules to return per page
-     * @param int $pageNum  The page number to return (if more than one page of results)
-     *
-     * @throws \Exception
-     *
-     * @return array
-     */
-    public function listCacheRules($siteId, $pageSize = 50, $pageNum = 0)
+    public function listCacheRules(string $siteId, int $pageSize = 50, int $pageNum = 0): array
     {
         return $this->client->sendRaw(sprintf('%s/performance/caching-rules/list', $this->apiUri), [
             'site_id' => $siteId,
@@ -131,12 +79,7 @@ class SitesApi extends AbstractApi
         ]);
     }
 
-        /**
-     * @param array $params
-     *
-     * @return array
-     */
-    public function setStaticCacheMode($siteId)
+    public function setStaticCacheMode(string $siteId): array
     {
         return $this->client->send(sprintf('%s/performance/cache-mode', $this->apiUri), [
             'site_id' => $siteId,

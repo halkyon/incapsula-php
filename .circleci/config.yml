@@ -5,7 +5,7 @@ jobs:
     parallelism: 1
     shell: /bin/bash --login
     docker:
-      - image: circleci/php:7.1-cli-jessie
+      - image: circleci/php:7.3.15-cli-buster
     steps:
       - checkout
       - restore_cache:
@@ -27,7 +27,7 @@ jobs:
     parallelism: 1
     shell: /bin/bash --login
     docker:
-      - image: circleci/php:7.1-cli-jessie
+      - image: circleci/php:7.3.15-cli-buster
     steps:
       - attach_workspace:
           at: /home/circleci/halkyon
@@ -38,7 +38,7 @@ jobs:
     parallelism: 1
     shell: /bin/bash --login
     docker:
-      - image: circleci/php:7.1-cli-jessie
+      - image: circleci/php:7.3.15-cli-buster
     steps:
       - attach_workspace:
           at: /home/circleci/halkyon

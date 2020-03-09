@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incapsula\Command;
 
 use function json_encode;
@@ -10,17 +12,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ListAllCacheRulesCommand extends SitesListCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
         $this
             ->setName('sites:listcacherules')
             ->addOption('json', null, InputOption::VALUE_NONE, 'Output as JSON')
-            ->setDescription('List all cache rules for all sites');
+            ->setDescription('List all cache rules for all sites')
+        ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $rules = $this->getRules();
 
@@ -51,7 +54,7 @@ class ListAllCacheRulesCommand extends SitesListCommand
         return 0;
     }
 
-    private function getRules()
+    private function getRules(): array
     {
         $api = $this->client->sites();
         $sites = $this->getSites();

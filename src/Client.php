@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incapsula;
 
 use Exception;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
-use Incapsula\Api\accountsApi;
+use Incapsula\Api\AccountsApi;
 use Incapsula\Api\IntegrationApi;
 use Incapsula\Api\SitesApi;
 use Incapsula\Credentials\CredentialProvider;
@@ -23,13 +26,10 @@ class Client
      */
     private $httpClient;
 
-    /**
-     * @param array $options
-     */
     public function __construct(array $options = [])
     {
-        $profile = isset($options['profile']) ? $options['profile'] : null;
-        $credentials = isset($options['credentials']) ? $options['credentials'] : null;
+        $profile = $options['profile'] ?? null;
+        $credentials = $options['credentials'] ?? null;
         if (null === $credentials) {
             $credentials = CredentialProvider::env();
             if (null === $credentials) {
@@ -40,60 +40,39 @@ class Client
         $this->credentials = $credentials;
     }
 
-    /**
-     * @return HttpClient
-     */
-    public function getHttpClient()
+    public function getHttpClient(): ClientInterface
     {
-        if (!$this->httpClient) {
+        if (null === $this->httpClient) {
             return new HttpClient(['timeout' => 20]);
         }
 
         return $this->httpClient;
     }
 
-    /**
-     * @param ClientInterface $client
-     */
-    public function setHttpClient(ClientInterface $client)
+    public function setHttpClient(ClientInterface $client): void
     {
         $this->httpClient = $client;
     }
 
-    /**
-     * @return IntegrationApi
-     */
-    public function integration()
+    public function integration(): IntegrationApi
     {
         return new IntegrationApi($this);
     }
 
-    /**
-     * @return SitesApi
-     */
-    public function sites()
+    public function sites(): SitesApi
     {
         return new SitesApi($this);
     }
 
-    /**
-     * @return AccountsApi
-     */
-    public function accounts()
+    public function accounts(): AccountsApi
     {
         return new AccountsApi($this);
     }
 
     /**
-     * @param string $uri
-     * @param array  $params
-     * @param array  $headers
-     *
      * @throws Exception
-     *
-     * @return array
      */
-    public function send($uri, $params = [], $headers = [])
+    public function send(string $uri, array $params = [], array $headers = []): array
     {
         $data = $this->sendRaw($uri, $params, $headers);
 
@@ -109,15 +88,9 @@ class Client
      * ensuring there was at least *some* response). Useful for when the API endpoint does not implement the expected
      * 'res' structure expected by self::send().
      *
-     * @param string $uri
-     * @param array  $params
-     * @param array  $headers
-     *
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     *
-     * @return array
+     * @throws GuzzleException
      */
-    public function sendRaw($uri, $params = [], $headers = [])
+    public function sendRaw(string $uri, array $params = [], array $headers = []): array
     {
         // apply credentials to all api calls except integration/ips, which doesn't require them.
         if (false === strpos($uri, 'integration/ips')) {
@@ -129,7 +102,7 @@ class Client
 
         $request = new Request('POST', $uri, $headers);
         $response = $this->getHttpClient()->send($request, ['form_params' => $params]);
-        $data = json_decode($response->getBody(), true);
+        $data = json_decode((string) $response->getBody(), true);
 
         if (null === $data) {
             throw new Exception(sprintf('Could not parse JSON (code: %s)', json_last_error()));
