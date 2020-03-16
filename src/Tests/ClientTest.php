@@ -20,21 +20,6 @@ use PHPUnit\Framework\TestCase;
 final class ClientTest extends TestCase
 {
     /**
-     * @var null|Client
-     */
-    private $client;
-
-    protected function setUp(): void
-    {
-        $this->client = new Client(['credentials' => new Credentials('fakeid', 'fakekey')]);
-    }
-
-    protected function tearDown(): void
-    {
-        $this->client = null;
-    }
-
-    /**
      * @covers ::send
      */
     public function testGoodResponse(): void
@@ -44,8 +29,9 @@ final class ClientTest extends TestCase
             new Response(200, [], file_get_contents(__DIR__.'/Responses/good_response.json')),
         ], $history);
 
-        $this->client->setHttpClient($httpClient);
-        $response = $this->client->send('https://dummy.incapsula.lan/api/something/v1/foo');
+        $client = $this->createClient();
+        $client->setHttpClient($httpClient);
+        $response = $client->send('https://dummy.incapsula.lan/api/something/v1/foo');
         $request = $history[0]['request'];
 
         static::assertCount(1, $history);
@@ -68,8 +54,14 @@ final class ClientTest extends TestCase
 
         $this->expectException('Exception');
 
-        $this->client->setHttpClient($httpClient);
-        $this->client->send('https://dummy.incapsula.lan/api/something/v1/foo');
+        $client = $this->createClient();
+        $client->setHttpClient($httpClient);
+        $client->send('https://dummy.incapsula.lan/api/something/v1/foo');
+    }
+
+    private function createClient(): Client
+    {
+        return new Client(['credentials' => new Credentials('fakeid', 'fakekey')]);
     }
 
     /**

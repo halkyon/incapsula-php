@@ -11,11 +11,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SubAccountListCommand extends AbstractCommand
 {
-    /**
-     * @var string
-     */
-    private $accountName;
-
     protected function configure(): void
     {
         parent::configure();
