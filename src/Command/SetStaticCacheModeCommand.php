@@ -30,7 +30,7 @@ class SetStaticCacheModeCommand extends AbstractCommand
         parent::configure();
 
         $this
-            ->setName('StaticCacheMode:set')
+            ->setName('staticcachemode:set')
             ->addArgument('site-id', InputArgument::REQUIRED, 'Site ID')
             ->setDescription('Ensure a site is in static caching header mode')
         ;

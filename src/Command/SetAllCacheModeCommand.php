@@ -17,9 +17,9 @@ class SetAllCacheModeCommand extends SitesListCommand
         parent::configure();
 
         $this
-            ->setName('sites:setCacheMode')
+            ->setName('sites:setcachemode')
             ->addOption('json', null, InputOption::VALUE_NONE, 'Output as JSON')
-            ->setDescription('List all cache rules for all sites')
+            ->setDescription('Set all sites to static caching header mode')
         ;
     }
 
