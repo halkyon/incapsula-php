@@ -52,7 +52,6 @@ class SetAllCacheModeCommand extends SitesListCommand
 
     private function setCacheMode(): array
     {
-        $api = $this->client->sites();
         $sites = $this->getSites();
         $changed = [];
         foreach ($sites as $site) {
