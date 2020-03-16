@@ -29,7 +29,17 @@ class SitesApi extends AbstractApi
     {
         return $this->client->send(sprintf('%s/add', $this->apiUri), $params);
     }
-
+    /**
+     * @param string $siteId
+     *
+     * @return array
+     */
+    public function status($siteId)
+    {
+        return $this->client->send(sprintf('%s/status', $this->apiUri), [
+            'site_id' => $siteId,
+        ]);
+    }
     /**
      * @param string $siteId
      *
@@ -118,6 +128,19 @@ class SitesApi extends AbstractApi
             'site_id' => $siteId,
             'page_size' => $pageSize,
             'page_num' => $pageNum,
+        ]);
+    }
+
+        /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function setStaticCacheMode($siteId)
+    {
+        return $this->client->send(sprintf('%s/performance/cache-mode', $this->apiUri), [
+            'site_id' => $siteId,
+            'cache_mode' => 'static_only',
         ]);
     }
 }
