@@ -22,10 +22,7 @@ class SitesListAttributeCommand extends AbstractCommand
         ;
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $attribute = $input->getOption('attribute');
 
@@ -41,7 +38,7 @@ class SitesListAttributeCommand extends AbstractCommand
         return 0;
     }
 
-    protected function getSites()
+    protected function getSites(): array
     {
         $api = $this->client->sites();
         $sites = [];

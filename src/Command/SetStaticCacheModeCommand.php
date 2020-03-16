@@ -45,8 +45,10 @@ class SetStaticCacheModeCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        return $this->client->sites()->setStaticCacheMode(
+        $this->client->sites()->setStaticCacheMode(
             $this->siteId,
         );
+
+        return 0;
     }
 }
