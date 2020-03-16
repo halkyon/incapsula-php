@@ -15,16 +15,6 @@ class SetStaticCacheModeCommand extends AbstractCommand
      */
     private $siteId;
 
-    /**
-     * @var string
-     */
-    private $certificatePath;
-
-    /**
-     * @var string
-     */
-    private $privateKeyPath;
-
     protected function configure(): void
     {
         parent::configure();
