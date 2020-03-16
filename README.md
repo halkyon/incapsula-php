@@ -10,6 +10,9 @@ command line tools for executing various tasks against the Incapsula API.
 
 Currently only a few commands are available. This is currently a work in progress.
 
+Please see the [public API docs for Incapsula/Imperva](https://docs.imperva.com/bundle/cloud-application-security/page/api/api.htm)
+for more information on how the API works.
+
 ## Installation
 
 1. Clone the repo locally: `git clone git@github.com:halkyon/incapsula-php.git`.
